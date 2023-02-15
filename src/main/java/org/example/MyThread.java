@@ -3,7 +3,11 @@ package org.example;
 public class MyThread extends Thread {
 
   int number;
+  private long result;
 
+  public long getResult() {
+    return result;
+  }
   public MyThread(String name, int number) {
     super(name);
     this.number = number;
@@ -16,6 +20,6 @@ public class MyThread extends Thread {
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }
-    System.out.println( "Thread [" + this.getName() +  "] -> Fibonacci number for " + number + " is " + finalNumber);
+    this.result = finalNumber;
   }
 }
