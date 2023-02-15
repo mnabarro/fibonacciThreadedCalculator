@@ -23,7 +23,7 @@ public class AppMenu {
   }
   public static String mainMenu() {
     return new StringBuilder()
-      .append("\n\n")
+      .append("\n")
       .append("1 - Show tasks list\n")
       .append("2 - Add a new task\n")
       .append("3 - Start a task\n")
