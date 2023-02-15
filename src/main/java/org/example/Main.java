@@ -88,17 +88,21 @@ public class Main {
   }
 
   private static ArrayList<String> getTaskList(TaskStates state) {
-    String line;
     ArrayList<String> result = new ArrayList<>();
     for (Optional<MyThread> task : threadsCollection) {
       if (task.get().getState().toString().equals(state.name()) || state.equals(TaskStates.ALL)) {
-        line = "Name :" + task.get().getName() + " - id :" + task.get().getId() + " - State :" + task.get().getState();
-        if (task.get().getState() == State.TERMINATED) {
-          line = line + " - Result :" + task.get().getResult();
-        }
-        result.add(line);
+        addTaskInfoToList(result, task);
       }
     }
     return result;
+  }
+
+  private static void addTaskInfoToList(ArrayList<String> result, Optional<MyThread> task) {
+    String line;
+    line = "Name :" + task.get().getName() + " - id :" + task.get().getId() + " - State :" + task.get().getState();
+    if (task.get().getState() == State.TERMINATED) {
+      line = line + " - Result :" + task.get().getResult();
+    }
+    result.add(line);
   }
 }
