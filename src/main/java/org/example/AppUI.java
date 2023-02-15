@@ -18,7 +18,8 @@ public class AppUI {
   static class MenuMessages {
     public final static String chooseValidOption = "Sorry, you have to choose one valid option";
     public static final String pressEnterToContinue = "Press <ENTER> to continue";
-    public static final String selectTask = "Select a task index from the list";
+    public static final String selectTask = "Select a task number from the list or just <ENTER> to go back to main menu :";
+    public static final String enterNumber = "Enter a number to calculate the Fibonacci sequence :";
   }
   static class MenuOptions {
 
@@ -35,7 +36,6 @@ public class AppUI {
   }
   public static String mainMenu() {
     return new StringBuilder()
-      .append("\n")
       .append("1 - Show tasks list\n")
       .append("2 - Add a new task\n")
       .append("3 - Start a task\n")
@@ -43,19 +43,4 @@ public class AppUI {
       .append("0 - Quit program\n")
       .toString();
   }
-
-  public static String addTaskMenu() {
-    return new StringBuilder()
-      .append("\n")
-      .append("Enter the number to calculate\n")
-      .toString();
-  }
-
-  public static String startTaskMenu() {
-    return new StringBuilder()
-      .append("\n")
-      .append("Enter the task number to start\n")
-      .toString();
-  }
-
 }
