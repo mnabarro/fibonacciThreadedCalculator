@@ -1,20 +1,31 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AppMenu {
+public class AppUI {
 
-  class MenuMessages {
+  public static String listTasks(ArrayList<String> list, String taskState) {
+    StringBuilder result = new StringBuilder("\n "+taskState+" Tasks list\n");
+
+    for (String task : list) {
+        result.append(task).append("\n");
+      }
+
+      return result.toString();
+  }
+
+  static class MenuMessages {
     public final static String chooseValidOption = "Sorry, you have to choose one valid option";
     public static final String pressEnterToContinue = "Press <ENTER> to continue";
   }
-  class MenuOptions {
+  static class MenuOptions {
 
-    public static final String showTaskList = "1";
-    public static final String addNewTask = "2";
-    public static final String startTask = "3";
-    public static final String seeResults = "4";
-    public static final String quitProgram = "Q";
+    public static final int showTaskList = 1;
+    public static final int addNewTask = 2;
+    public static final int startTask = 3;
+    public static final int seeResults = 4;
+    public static final int quitProgram = 0;
   }
 
   public static String getUserInput() {
@@ -28,7 +39,7 @@ public class AppMenu {
       .append("2 - Add a new task\n")
       .append("3 - Start a task\n")
       .append("4 - See results of completed tasks\n")
-      .append("Q - Quit program\n")
+      .append("0 - Quit program\n")
       .toString();
   }
 
