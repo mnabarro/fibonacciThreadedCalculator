@@ -66,13 +66,14 @@ public class Main {
           System.out.println(AppUI.listTasks(getTaskList(TaskStates.NEW), "Not yet started"));
           System.out.println(MenuMessages.pressEnterToContinue);
           selection = Integer.valueOf(AppUI.getUserInput());
-
-          threadsCollection.get(selection).get().start();
+          if (threadsCollection.get(selection).isPresent()) {
+            threadsCollection.get(selection).get().start();
+          }
           appState = AppStates.MAIN_MENU;
         }
         case LIST_ALL_TASKS -> {
           System.out.println(AppUI.listTasks(getTaskList(TaskStates.ALL), "All"));
-          System.out.println(MenuMessages.pressEnterToContinue);
+          System.out.println(MenuMessages.selectTask);
           AppUI.getUserInput();
           appState = AppStates.MAIN_MENU;
         }

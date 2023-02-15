@@ -18,6 +18,7 @@ public class AppUI {
   static class MenuMessages {
     public final static String chooseValidOption = "Sorry, you have to choose one valid option";
     public static final String pressEnterToContinue = "Press <ENTER> to continue";
+    public static final String selectTask = "Select a task index from the list";
   }
   static class MenuOptions {
 
