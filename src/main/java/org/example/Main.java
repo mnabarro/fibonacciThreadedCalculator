@@ -9,6 +9,8 @@ import org.example.AppUI.MenuMessages;
 import org.example.AppUI.MenuOptions;
 
 public class Main {
+  enum AppStates {MAIN_MENU, ADD_TASK, START_TASK, LIST_ALL_TASKS, LIST_COMPLETED_TASKS}
+  enum TaskStates {ALL, NEW, TERMINATED}
 
   static AppStates appState = AppStates.MAIN_MENU;
   static Integer numberToCalculate = 0;
@@ -16,7 +18,73 @@ public class Main {
   static ArrayList<Optional<MyThread>> threadsCollection = new ArrayList<>();
   static String userInput = "";
 
-  public static ArrayList<String> getTaskList(TaskStates state) {
+  public static void main(String[] args) {
+
+    while (true) {
+      switch (appState) {
+        case MAIN_MENU -> showMainMenu();
+        case ADD_TASK -> addTask();
+        case START_TASK -> startTask();
+        case LIST_ALL_TASKS -> listAllTasks();
+        case LIST_COMPLETED_TASKS -> listCompletedTasks();
+      }
+    }
+  }
+  private static void addTask() {
+    System.out.println(MenuMessages.enterNumber);
+    numberToCalculate = Integer.valueOf(AppUI.getUserInput());
+    threadsCollection.add(Optional.of(new MyThread("Task #" + threadsCollection.size(), numberToCalculate)));
+    appState = AppStates.MAIN_MENU;
+  }
+
+  private static void listAllTasks() {
+    System.out.println(AppUI.listTasks(getTaskList(TaskStates.ALL), "All"));
+    System.out.println(MenuMessages.pressEnterToContinue);
+    AppUI.getUserInput();
+    appState = AppStates.MAIN_MENU;
+  }
+
+  private static void listCompletedTasks() {
+    System.out.println(AppUI.listTasks(getTaskList(TaskStates.TERMINATED), "Finished"));
+    System.out.println(MenuMessages.pressEnterToContinue);
+    AppUI.getUserInput();
+    appState = AppStates.MAIN_MENU;
+  }
+
+  private static void showMainMenu() {
+    System.out.println(AppUI.mainMenu());
+    selection = Integer.valueOf(AppUI.getUserInput());
+    switch (selection) {
+      case MenuOptions.addNewTask -> appState = AppStates.ADD_TASK;
+      case MenuOptions.startTask -> appState = AppStates.START_TASK;
+      case MenuOptions.showAllTasks -> appState = AppStates.LIST_ALL_TASKS;
+      case MenuOptions.showCompletedTasks -> appState = AppStates.LIST_COMPLETED_TASKS;
+      case MenuOptions.quitProgram -> System.exit(0);
+      default -> System.out.println(MenuMessages.chooseValidOption);
+    }
+  }
+
+  private static void startTask() {
+    System.out.println(AppUI.listTasks(getTaskList(TaskStates.NEW), "Not yet started"));
+    System.out.println(MenuMessages.selectTask);
+
+    userInput = AppUI.getUserInput();
+    if (userInput.isEmpty()) {
+      appState = AppStates.MAIN_MENU;
+      return;
+    }
+
+    selection = Integer.valueOf(userInput);
+
+    if (threadsCollection.get(selection).isPresent() && threadsCollection.get(selection).get().getState() == NEW) {
+      threadsCollection.get(selection).get().start();
+    } else {
+      System.out.println(MenuMessages.chooseValidOption);
+    }
+    appState = AppStates.MAIN_MENU;
+  }
+
+  private static ArrayList<String> getTaskList(TaskStates state) {
     String line;
     ArrayList<String> result = new ArrayList<>();
     for (Optional<MyThread> task : threadsCollection) {
@@ -31,65 +99,4 @@ public class Main {
     }
     return result;
   }
-
-  public static void main(String[] args) {
-
-    while (true) {
-      switch (appState) {
-        case MAIN_MENU -> {
-          System.out.println(AppUI.mainMenu());
-          selection = Integer.valueOf(AppUI.getUserInput());
-          switch (selection) {
-            case MenuOptions.addNewTask -> appState = AppStates.ADD_TASK;
-            case MenuOptions.startTask -> appState = AppStates.START_TASK;
-            case MenuOptions.showAllTasks -> appState = AppStates.LIST_ALL_TASKS;
-            case MenuOptions.showCompletedTasks -> appState = AppStates.LIST_COMPLETED_TASKS;
-            case MenuOptions.quitProgram -> System.exit(0);
-            default -> System.out.println(MenuMessages.chooseValidOption);
-          }
-        }
-        case ADD_TASK -> {
-          System.out.println(MenuMessages.enterNumber);
-          numberToCalculate = Integer.valueOf(AppUI.getUserInput());
-          threadsCollection.add(Optional.of(new MyThread("Task #" + threadsCollection.size(), numberToCalculate)));
-          appState = AppStates.MAIN_MENU;
-        }
-        case START_TASK -> {
-          System.out.println(AppUI.listTasks(getTaskList(TaskStates.NEW), "Not yet started"));
-          System.out.println(MenuMessages.selectTask);
-
-          userInput = AppUI.getUserInput();
-          if (userInput.isEmpty()) {
-            appState = AppStates.MAIN_MENU;
-            break;
-          }
-
-          selection = Integer.valueOf(userInput);
-
-          if (threadsCollection.get(selection).isPresent() && threadsCollection.get(selection).get().getState() == NEW) {
-            threadsCollection.get(selection).get().start();
-          } else {
-            System.out.println(MenuMessages.chooseValidOption);
-          }
-          appState = AppStates.MAIN_MENU;
-        }
-        case LIST_ALL_TASKS -> {
-          System.out.println(AppUI.listTasks(getTaskList(TaskStates.ALL), "All"));
-          System.out.println(MenuMessages.pressEnterToContinue);
-          AppUI.getUserInput();
-          appState = AppStates.MAIN_MENU;
-        }
-        case LIST_COMPLETED_TASKS -> {
-          System.out.println(AppUI.listTasks(getTaskList(TaskStates.TERMINATED), "Finished"));
-          System.out.println(MenuMessages.pressEnterToContinue);
-          AppUI.getUserInput();
-          appState = AppStates.MAIN_MENU;
-        }
-      }
-    }
-  }
-
-  enum AppStates {MAIN_MENU, ADD_TASK, START_TASK, LIST_ALL_TASKS, LIST_COMPLETED_TASKS}
-
-  enum TaskStates {ALL, NEW, TERMINATED}
 }
