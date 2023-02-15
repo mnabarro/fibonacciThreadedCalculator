@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class AppUI {
 
   public static String listTasks(ArrayList<String> list, String taskState) {
-    StringBuilder result = new StringBuilder("\n "+taskState+" Tasks list\n");
+    StringBuilder result = new StringBuilder("\n "+taskState+" tasks list\n");
 
     for (String task : list) {
         result.append(task).append("\n");
@@ -21,10 +21,10 @@ public class AppUI {
   }
   static class MenuOptions {
 
-    public static final int showTaskList = 1;
+    public static final int showAllTasks = 1;
     public static final int addNewTask = 2;
     public static final int startTask = 3;
-    public static final int seeResults = 4;
+    public static final int showCompletedTasks = 4;
     public static final int quitProgram = 0;
   }
 
