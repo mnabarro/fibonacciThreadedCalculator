@@ -10,15 +10,11 @@ import org.example.AppUI.MenuOptions;
 
 public class Main {
 
-  enum AppStates {MAIN_MENU, ADD_TASK, START_TASK, LIST_ALL_TASKS, LIST_COMPLETED_TASKS}
-
-  enum TaskStates {ALL, NEW, TERMINATED}
-
   static AppStates appState = AppStates.MAIN_MENU;
-  static Integer selection = 0;
-  static String userInput = "";
   static Integer numberToCalculate = 0;
+  static Integer selection = 0;
   static ArrayList<Optional<MyThread>> threadsCollection = new ArrayList<>();
+  static String userInput = "";
 
   public static ArrayList<String> getTaskList(TaskStates state) {
     String line;
@@ -92,4 +88,8 @@ public class Main {
       }
     }
   }
+
+  enum AppStates {MAIN_MENU, ADD_TASK, START_TASK, LIST_ALL_TASKS, LIST_COMPLETED_TASKS}
+
+  enum TaskStates {ALL, NEW, TERMINATED}
 }
