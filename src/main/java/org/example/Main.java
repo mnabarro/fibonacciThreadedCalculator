@@ -1,31 +1,18 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Main {
-  public static class MyThread extends Thread {
-    int number = 0;
-    public MyThread(String name, int number) {
-      super(name);
-      this.number = number;
-    }
 
-    public void run(){
-
-      try {
-        Fibonacci.calculate(number);
-      } catch (InterruptedException e) {
-        throw new RuntimeException(e);
-      }
-      System.out.println("MyThread running");
-    }
+  static ArrayList<MyThread> threadsCollection = new ArrayList<>();
+  static int getRandomIntInRange(int min, int max) {
+    Random random = new Random();
+    return random.nextInt(max - min) + min;
   }
-  public static void main(String[] args) throws Exception {
-    MyThread myThread = new MyThread("fibo.1",3);
-    MyThread myThread2 = new MyThread("fibo.1",3);
-    MyThread myThread3 = new MyThread("fibo.1",3);
-    myThread.start();
-    myThread2.start();
-    myThread3.start();
+  public static void main(String[] args) {
 
-    System.out.println("fibo =" + Fibonacci.calculate(100));
+  threadsCollection.add(new MyThread("Thread #"+ threadsCollection.size(), getRandomIntInRange(5,50)));
+  threadsCollection.get(0).start();
   }
 }
