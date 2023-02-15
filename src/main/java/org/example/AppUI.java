@@ -40,10 +40,10 @@ public class AppUI {
 
   static class MenuOptions {
 
-    public static final int addNewTask = 2;
-    public static final int quitProgram = 0;
     public static final int showAllTasks = 1;
-    public static final int showCompletedTasks = 4;
+    public static final int addNewTask = 2;
     public static final int startTask = 3;
+    public static final int showCompletedTasks = 4;
+    public static final int quitProgram = 0;
   }
 }

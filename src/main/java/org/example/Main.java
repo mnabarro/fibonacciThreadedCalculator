@@ -19,7 +19,6 @@ public class Main {
   static String userInput = "";
 
   public static void main(String[] args) {
-
     while (true) {
       switch (appState) {
         case MAIN_MENU -> showMainMenu();
@@ -52,15 +51,19 @@ public class Main {
   }
 
   private static void showMainMenu() {
-    System.out.println(AppUI.mainMenu());
-    selection = Integer.valueOf(AppUI.getUserInput());
-    switch (selection) {
-      case MenuOptions.addNewTask -> appState = AppStates.ADD_TASK;
-      case MenuOptions.startTask -> appState = AppStates.START_TASK;
-      case MenuOptions.showAllTasks -> appState = AppStates.LIST_ALL_TASKS;
-      case MenuOptions.showCompletedTasks -> appState = AppStates.LIST_COMPLETED_TASKS;
-      case MenuOptions.quitProgram -> System.exit(0);
-      default -> System.out.println(MenuMessages.chooseValidOption);
+    try {
+      System.out.println(AppUI.mainMenu());
+      selection = Integer.valueOf(AppUI.getUserInput());
+      switch (selection) {
+        case MenuOptions.addNewTask -> appState = AppStates.ADD_TASK;
+        case MenuOptions.startTask -> appState = AppStates.START_TASK;
+        case MenuOptions.showAllTasks -> appState = AppStates.LIST_ALL_TASKS;
+        case MenuOptions.showCompletedTasks -> appState = AppStates.LIST_COMPLETED_TASKS;
+        case MenuOptions.quitProgram -> System.exit(0);
+        default -> System.out.println(MenuMessages.chooseValidOption);
+      }
+    } catch (Exception e) {
+      System.out.println(MenuMessages.chooseValidOption);
     }
   }
 
@@ -95,7 +98,6 @@ public class Main {
         }
         result.add(line);
       }
-
     }
     return result;
   }
